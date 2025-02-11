@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Us!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            flex-direction: row-reverse; /* RTL star order */
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            font-size: 3rem;
+            color: #ddd;
+            cursor: pointer;
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: gold;
+        }
+        .feedback-form {
+            display: none;
+            margin-top: 20px;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Rate Us on Google!</h1>
+    <p>Your feedback is important to us. Please rate us below:</p>
+
+    <div class="star-rating">
+        <input type="radio" id="star5" name="rating" value="5">
+        <label for="star5">&#9733;</label>
+        <input type="radio" id="star4" name="rating" value="4">
+        <label for="star4">&#9733;</label>
+        <input type="radio" id="star3" name="rating" value="3">
+        <label for="star3">&#9733;</label>
+        <input type="radio" id="star2" name="rating" value="2">
+        <label for="star2">&#9733;</label>
+        <input type="radio" id="star1" name="rating" value="1">
+        <label for="star1">&#9733;</label>
+    </div>
+
+    <div id="feedback-1" class="feedback-form">
+        <h3>We're sorry to hear that! Please share your feedback:</h3>
+        <textarea id="feedback-text-1" placeholder="Tell us how we can improve..." rows="4"></textarea><br><br>
+        <button onclick="sendFeedback(1)">Submit Feedback</button>
+    </div>
+
+    <div id="feedback-2" class="feedback-form">
+        <h3>We're sorry to hear that! Please share your feedback:</h3>
+        <textarea id="feedback-text-2" placeholder="Tell us how we can improve..." rows="4"></textarea><br><br>
+        <button onclick="sendFeedback(2)">Submit Feedback</button>
+    </div>
+
+    <div id="feedback-3" class="feedback-form">
+        <h3>We're sorry to hear that! Please share your feedback:</h3>
+        <textarea id="feedback-text-3" placeholder="Tell us how we can improve..." rows="4"></textarea><br><br>
+        <button onclick="sendFeedback(3)">Submit Feedback</button>
+    </div>
+
+    <script>
+        const starInputs = document.querySelectorAll('input[name="rating"]');
+        
+        starInputs.forEach(star => {
+            star.addEventListener('change', function() {
+                const rating = parseInt(this.value);
+                
+                document.querySelectorAll('.feedback-form').forEach(form => {
+                    form.style.display = 'none';
+                });
+                
+                if (rating >= 4) {
+                    window.location.href = 'https://www.google.com/search?q=kb+electrical+barrie';
+                } else {
+                    document.getElementById(`feedback-${rating}`).style.display = 'block';
+                }
+            });
+        });
+
+        function sendFeedback(rating) {
+            const feedbackText = document.getElementById(`feedback-text-${rating}`).value.trim();
+            
+            if (feedbackText) {
+                const email = 'vankolfschoten22@gmail.com';
+                const subject = `Feedback on ${rating}-Star Rating`;
+                const body = `User gave a ${rating}-star rating and provided the following feedback:\n\n${feedbackText}`;
+                
+                const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                window.location.href = mailtoLink;
+            } else {
+                alert("Please provide your feedback before submitting.");
+            }
+        }
+    </script>
+
+</body>
+</html>
